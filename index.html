@@ -58,6 +58,7 @@
     </div>
 
     <script>
+        var audioCancion;
         var reproduciendo = false;
 
         function pausar() {
@@ -85,6 +86,17 @@
         }
 
         function reproducir() {
+            if (audioCancion != undefined) {
+                audioCancion.pause();
+            }
+            
+            var cancionesEnReproduccion = document.getElementsByClassName("enreproduccion");
+
+            if (cancionesEnReproduccion.length == 1) {
+                cancionesEnReproduccion[0].classList.remove("enreproduccion");
+            }
+
+
             reproduciendo = true;
 
             audioCancion = new Audio(this.dataset.archivo);
@@ -94,6 +106,8 @@
             document.getElementById("adicional").innerText = this.dataset.artista + " - " + this.dataset.album;
             document.getElementById("cover").src = this.dataset.cover;
             document.getElementById("playpause").className = "fas fa-pause";
+
+            this.classList.add("enreproduccion");
         }
 
         function parar() {
