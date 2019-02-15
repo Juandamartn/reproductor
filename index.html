@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Reproductor de audio</title>
+</head>
+
+<body>
+    <div id="reproductor" class="reproductor">
+        <div class="player">
+            <div class="imagen">
+                <img id="cover" src="/img/sound.png" alt="Caratula de la canción">
+            </div>
+            <div class="datos">
+                <p id="titulo" class="titulo">Reprodutor</p>
+                <p id="adicional">de audio</p>
+            </div>
+
+            <div id="controles" class="controles">
+                <button type="button" id="btnAnterior"><i class="fas fa-step-backward"></i></button>
+                <button type="button" id="btnPlayPause"><i class="fas fa-play" id="playpause"></i></button>
+                <button type="button" id="btnSiguiente"><i class="fas fa-step-forward"></i></button>
+                <button type="button" id="btnBajar"><i class="fas fa-volume-down"></i></button>
+                <button type="button" id="btnSubir"><i class="fas fa-volume-up"></i></button>
+            </div>
+        </div>
+
+        <section id="listaCanciones" class="listaCanciones">
+            <article id="cancion" class="cancion" data-archivo="/canciones/Kinky - Huracán (Mtv Unplugged En Vivo).mp3" data-nombre="Huracán" data-artista="Kinky" data-album="MTV Unplugged" data-cover="/img/kinky.png">
+                <i class="far fa-play-circle"></i>
+                <p class="titlelist">Huracán</p>
+                <p class="description">Kinky - MTV Unplugged</p>
+            </article>
+            <article id="cancion" class="cancion" data-archivo="/canciones/Los Bunkers - Bailando Solo.mp3" data-nombre="Bailando Solo" data-artista="Los Bunkers" data-album="Bailando Solo" data-cover="/img/bunkers.jpg">
+                <i class="far fa-play-circle"></i>
+                <p class="titlelist">Bailando Solo</p>
+                <p class="description">Los Bunkers - Bailando Solo</p>
+            </article>
+            <article id="cancion" class="cancion" data-archivo="/canciones/La Gusana Ciega - Califórnica.mp3" data-nombre="Califórnica" data-artista="La Gusana Ciega" data-album="Monarca" data-cover="/img/gusana.jpg">
+                <i class="far fa-play-circle"></i>
+                <p class="titlelist">Califórnica</p>
+                <p class="description">La Gusana Ciega - Monarca</p>
+            </article>
+            <article id="cancion" class="cancion" data-archivo="/canciones/Rage Against the Machine - Bulls On Parade.mp3" data-nombre="Bulls On Parade" data-artista="Rage Against The Machine" data-album="Bulls On Parade" data-cover="/img/rage.jpg">
+                <i class="far fa-play-circle"></i>
+                <p class="titlelist">Bulls On Parade</p>
+                <p class="description">Rage Against The Machine - Bulls On Parade</p>
+            </article>
+            <article id="cancion" class="cancion" data-archivo="/canciones/La Ley - Animal.mp3" data-nombre="Animal" data-artista="La Ley" data-album="MTV Unplugged" data-cover="/img/la-ley.jpg">
+                <i class="far fa-play-circle"></i>
+                <p class="titlelist">Animal</p>
+                <p class="description">La Ley - MTV Unplugged</p>
+            </article>
+        </section>
+    </div>
+
+    <script>
+        var reproduciendo = false;
+
+        function pausar() {
+            if (reproduciendo == true) {
+                audioCancion.pause();
+                reproduciendo = false;
+                document.getElementById("playpause").className = "fas fa-play";
+            } else if (reproduciendo == false) {
+                audioCancion.play();
+                reproduciendo = true;
+                document.getElementById("playpause").className = "fas fa-pause";
+            }
+        }
+
+        function subirVolumen() {
+            if (audioCancion.volume < 1) {
+                audioCancion.volume += 0.1;
+            }
+        }
+
+        function bajarVolumen() {
+            if (audioCancion.volume > 0) {
+                audioCancion.volume -= 0.1;
+            }
+        }
+
+        function reproducir() {
+            reproduciendo = true;
+
+            audioCancion = new Audio(this.dataset.archivo);
+            audioCancion.play();
+
+            document.getElementById("titulo").innerText = this.dataset.nombre;
+            document.getElementById("adicional").innerText = this.dataset.artista + " - " + this.dataset.album;
+            document.getElementById("cover").src = this.dataset.cover;
+            document.getElementById("playpause").className = "fas fa-pause";
+        }
+
+        function parar() {
+            audioCancion.pause();
+            audioCancion.currentTime = 0;
+
+            reproduciendo = false;
+        }
+
+        function inicializar() {
+            document.getElementById("btnSubir").onclick = subirVolumen;
+            document.getElementById("btnBajar").onclick = bajarVolumen;
+            document.getElementById("btnPlayPause").onclick = pausar;
+
+            canciones = document.getElementsByClassName("cancion");
+
+            for (i = 0; i < canciones.length; i++) {
+                canciones[i].onclick = reproducir;
+            }
+
+        }
+
+        window.onload = inicializar;
+    </script>
+</body>
+
+</html>
