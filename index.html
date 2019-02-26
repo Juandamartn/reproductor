@@ -116,11 +116,21 @@
 
             reproduciendo = false;
         }
+        
+        function reproducirAnterior() {
+            
+        }
+        
+        function reproducirSiguiente() {
+            
+        }
 
         function inicializar() {
             document.getElementById("btnSubir").onclick = subirVolumen;
             document.getElementById("btnBajar").onclick = bajarVolumen;
             document.getElementById("btnPlayPause").onclick = pausar;
+            document.getElementById("btnSiguiente").onclick = reproducirSiguiente;
+            document.getElementById("btnAnterior").onclick = reproducirAnterior;
 
             canciones = document.getElementsByClassName("cancion");
 
